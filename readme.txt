@@ -3,7 +3,7 @@ Contributors: jdyken
 Tags: fantasy football
 Requires at least: 3.0.1
 Tested up to: 4.2.1
-Stable tag: trunk
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,8 @@ Put the fantasy football data from FantasyFootballNerd.com on your website. Auto
 Looking to beef up your fantasy football website or blog with automatically-updated content? Add the draft rankings, draft projections, game day weather, injuries, defensive rankings, weekly rankings, weekly projections, bye weeks, draft auction values, NFL depth charts, and more from Fantasy Football Nerd with the official FFN WordPress Fantasy Football Plugin!
 
 == Installation ==
+Instructions for implementing the plugin can be found at http://www.fantasyfootballnerd.com/wordpress
+
 First things first - you'll need to download and activate the FFN plugin. From the WordPress Administration screen, click on "Plugins" and look for the Fantasy Football plugin. When you find it, click the Activate link.
 
 In order for the plugin to talk to FantasyFootballNerd.com, you'll need to create a free API key. This key allows your plugin to tell us who you are, what services your account has access to, and allows us to monitor the resources used so that we can continue to provide a responsive platform for everyone.
