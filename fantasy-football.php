@@ -6,7 +6,7 @@
  * Plugin Name: Fantasy Football
  * Plugin URI: http://www.fantasyfootballnerd.com/wordpress
  * Description: Put the award-winning fantasy football rankings and projections from FantasyFootballNerd.com on your website. Automatically updated. Perfect for any fantasy football related website. 
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: TayTech, LLC
  * Author URI: http://www.fantasyfootballnerd.com/wordpress
  * Text Domain: FantasyFootballNerd.com
@@ -441,7 +441,7 @@ function ffnCallAPI($service, $format, $options = array()){
 	}
 	if (!isset($body) && $format == 'xml'){$body = '<?xml version="1.0" encoding="UTF-8" ?><Error>No Response</Error>';}
 	if (!isset($body) && $format == 'json'){$body = json_decode(array());}
-	if (strtolower($apiKey) == 'test'){echo "<p>** TEST DATA **</p><p>To retrieve live data, please create a free API key. Instructions for working with the FFN WordPress plugin can be found <a href='http://www.fantasyfootballnerd.com/wordpress' target='_blank'>here</a>.</p>";}
+	if (strtolower($apiKey) == 'test'){echo "<p>** TEST DATA **</p><p>To retrieve live data, please create a <a href='http://www.fantasyfootballnerd.com/fantasy-football-api' target='_blank'>free API key</a>. Instructions for working with the FFN WordPress plugin can be found <a href='http://www.fantasyfootballnerd.com/wordpress' target='_blank'>here</a>.</p>";}
 	return $body;
 }
 
