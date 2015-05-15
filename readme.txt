@@ -3,7 +3,7 @@ Contributors: jdyken
 Tags: fantasy football
 Requires at least: 3.0.1
 Tested up to: 4.2.1
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,8 +36,8 @@ Q: Do I have to mention that the data comes from Fantasy Football Nerd?
 A: Nope - in fact we'd prefer that you didn't. The plugin is designed to be seamlessly integrated into YOUR website, not ours. There is absolutely no mention of Fantasy Football Nerd in the content.
 
 == Screenshots ==
-1. assets/Capture1.jpg
-2. assets/Capture2.jpg
+1. /assets/capture1.jpg
+2. /assets/capture2.jpg
 
 == Changelog ==
 1.0 Initial version and commit

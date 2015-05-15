@@ -1,12 +1,9 @@
 <?php
 /**
- * @package Fantasy Football
- */
-/**
  * Plugin Name: Fantasy Football
  * Plugin URI: http://www.fantasyfootballnerd.com/wordpress
  * Description: Put the award-winning fantasy football rankings and projections from FantasyFootballNerd.com on your website. Automatically updated. Perfect for any fantasy football related website. 
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: TayTech, LLC
  * Author URI: http://www.fantasyfootballnerd.com/wordpress
  * Text Domain: FantasyFootballNerd.com
@@ -53,7 +50,7 @@ add_shortcode('ffn_gameday_inactives', 'ffnGamedayInactives');
 /**
  * Add our CSS and Javascript
 **/
-wp_enqueue_style('ffncss', plugins_url('fantasy-football/css/ffn.css'),array(),'20150428');
+wp_enqueue_style('ffncss', plugins_url('fantasy-football/css/ffn.css'),array(),'20150515');
 
 
 
@@ -72,12 +69,12 @@ function ffnDraftRankings($params){
 		{
 		echo "<p>Error: " . $doc->getElementsByTagName("Error")->item(0)->nodeValue . "</p>";
 		}else{
-		echo "<table class='ffntable ffntable-striped'><thead><tr><th>Rank</th><th>Player</th><th>Team</th><th>Pos</th><th>Pos Rank</th><th>Bye</th></tr></thead><tbody>";
+		echo "<div class='ffntable-responsive'><table class='ffntable ffntable-striped'><thead><tr><th>Rank</th><th>Player</th><th>Team</th><th>Pos</th><th>Pos Rank</th><th>Bye</th></tr></thead><tbody>";
 		foreach ($doc->getElementsByTagName("Player") AS $player)
 			{
 			echo "<tr><td>" . $player->getElementsByTagName('overallRank')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('displayName')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('team')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('position')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('positionRank')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('byeWeek')->item(0)->nodeValue . "</td></tr>";
 			}
-		echo "</tbody></table>";
+		echo "</tbody></table></div>";
 		}
 }
 
@@ -96,7 +93,7 @@ function ffnDraftProjections($params){
 		{
 		echo "<p>Error: " . $doc->getElementsByTagName("Error")->item(0)->nodeValue . "</p>";
 		}else{
-		echo "<table class='ffntable ffntable-striped'><thead>";
+		echo "<div class='ffntable-responsive'><table class='ffntable ffntable-striped'><thead>";
 		if ($position == 'QB'){echo "<tr><th>Player</th><th>Team</th><th>Comp</th><th>Pass Yds</th><th>Pass TD</th><th>Int</th><th>Ru Yds</th><th>Ru TD</th><th>Fan Pts</th></tr>";}
 		if ($position == 'RB'){echo "<tr><th>Player</th><th>Team</th><th>Ru Att</th><th>Ru Yds</th><th>Ru TD</th><th>Rec</th><th>Rec Yds</th><th>Rec TD</th><th>Fum</th><th>Fan Pts</th></tr>";}
 		if ($position == 'WR'){echo "<tr><th>Player</th><th>Team</th><th>Rec</th><th>Rec Yds</th><th>Rec TD</th><th>Ru Att</th><th>Ru Yds</th><th>Ru TD</th><th>Fum</th><th>Fan Pts</th></tr>";}
@@ -113,7 +110,7 @@ function ffnDraftProjections($params){
 			if ($position == 'K'){echo "<tr><td>" . $player->getElementsByTagName('displayName')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('team')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('fg')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('xp')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('fantasyPoints')->item(0)->nodeValue . "</td></tr>";}
 			if ($position == 'DEF'){echo "<tr><td>" . $player->getElementsByTagName('displayName')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('sacks')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('interceptions')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('TD')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('specialTeamTD')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('fantasyPoints')->item(0)->nodeValue . "</td></tr>";}
 			}
-		echo "</tbody></table>";
+		echo "</tbody></table></div>";
 		}
 }
 
@@ -130,13 +127,13 @@ function ffnSchedule(){
 		}else{
 		$currentWeek = $doc->getElementsByTagName("CurrentWeek")->item(0)->nodeValue;
 		$week = 0;
-		echo "<table class='ffntable ffntable-striped'><thead><tr><th>Game Date</th><th>Home Team</th><th>Away Team</th><th>Kickoff</th><th>TV</th></tr></thead><tbody>";
+		echo "<div class='ffntable-responsive'><table class='ffntable ffntable-striped'><thead><tr><th>Game Date</th><th>Home Team</th><th>Away Team</th><th>Kickoff</th><th>TV</th></tr></thead><tbody>";
 		foreach ($doc->getElementsByTagName("Game") AS $game)
 			{
 			if ($game->getAttribute("gameWeek") != $week){ $week = $game->getAttribute("gameWeek"); echo "<tr><td colspan='5' class='ffnbold ffncenter'>Week $week</td></tr>"; }
 			echo "<tr><td>" . date("D, M j, Y", strtotime($game->getAttribute("gameDate"))) . "</td><td>" . $game->getAttribute("homeTeam") . "</td><td>" . $game->getAttribute("awayTeam") . "</td><td>" . $game->getAttribute("gameTimeET") . " ET</td><td>" . $game->getAttribute("tvStation") . "</td></tr>";
 			}
-		echo "</tbody></table>";
+		echo "</tbody></table></div>";
 		}
 }
 
@@ -146,7 +143,7 @@ function ffnSchedule(){
  * @param array $params An array of values provided in the shortcode. Expecting 'week' => 5 for a specific week to return. If no week specified, will return current week
 **/
 function ffnInjuries($params){
-	if (isset($params['week'])){$week = (int)$week; if ($week < 0 || $week > 17){unset($week);} }
+	if (isset($params['week'])){$week = (int)$params['week']; if ($week < 0 || $week > 17){unset($week);} }
 	if (!isset($week))
 		{
 		$data = ffnCallAPI('schedule', 'xml');
@@ -165,13 +162,13 @@ function ffnInjuries($params){
 			{
 			$team = $t->getAttribute("code");
 			echo "<div class='ffnpanel'><img src='http://www.fantasyfootballnerd.com/images/teams_small2/" . $team . ".png' alt='" . ffnGetTeamName($team, true) . "' title='" . ffnGetTeamName($team, true) . "'> " . ffnGetTeamName($team, true) . " Week $week Injuries</div>";
-			echo "<table class='ffntable ffntable-striped'><thead><tr><th>Player</th><th>Pos</th><th>Injury</th><th>Practice<br>Status</th><th>Game<br>Status</th><th>Updated</th></tr></thead><tbody>";
+			echo "<div class='ffntable-responsive'><table class='ffntable ffntable-striped'><thead><tr><th>Player</th><th>Pos</th><th>Injury</th><th>Practice<br>Status</th><th>Game<br>Status</th><th>Updated</th></tr></thead><tbody>";
 			foreach ($t->getElementsByTagName("Player") AS $player)
 				{
 				echo "<tr><td>" . $player->getAttribute('playerName') . "</td><td>" . $player->getAttribute('position') . "</td><td>" . $player->getAttribute('injury') . "</td><td>" . $player->getAttribute('practiceStatus') . "</td><td>" . $player->getAttribute('gameStatus') . "</td><td>" . date("M j", strtotime($player->getAttribute('lastUpdate'))) . "</td></tr>";
 				if ($player->getAttribute('notes') != ''){echo "<tr><td colspan='6' class='ffnnotes'>* " . $player->getAttribute('notes') . "</td></tr>";}
 				}
-			echo "</tbody></table>";
+			echo "</tbody></table></div>";
 			}
 		}
 }
@@ -187,7 +184,7 @@ function ffnByes(){
 		{
 		echo "<p>Error: " . $doc->getElementsByTagName("Error")->item(0)->nodeValue . "</p>";
 		}else{
-		echo "<table class='ffntable ffntable-striped'><thead><tr><th>Week</th><th>Team on Bye</th></tr></thead><tbody>";
+		echo "<div class='ffntable-responsive'><table class='ffntable ffntable-striped'><thead><tr><th>Week</th><th>Team on Bye</th></tr></thead><tbody>";
 		foreach ($doc->getElementsByTagName("Week") AS $w)
 			{
 			$week = $w->getAttribute("number");
@@ -196,7 +193,7 @@ function ffnByes(){
 				echo "<tr><td>$week</td><td><img src='http://www.fantasyfootballnerd.com/images/teams_small2/" . $team->getAttribute("code") . ".png' '> " . $team->getAttribute("name") . "</td></tr>";
 				}
 			}
-		echo "</tbody></table>";
+		echo "</tbody></table></div>";
 		}
 }
 
@@ -242,12 +239,12 @@ function ffnAuction($params){
 		{
 		echo "<p>Error: " . $doc->getElementsByTagName("Error")->item(0)->nodeValue . "</p>";
 		}else{
-		echo "<table class='ffntable ffntable-striped'><thead><tr><th>Price</th><th>Player</th><th>Team</th><th>Min Price</th><th>Max Price</th></tr></thead><tbody>";
+		echo "<div class='ffntable-responsive'><table class='ffntable ffntable-striped'><thead><tr><th>Price</th><th>Player</th><th>Team</th><th>Min Price</th><th>Max Price</th></tr></thead><tbody>";
 		foreach ($doc->getElementsByTagName("Player") AS $player)
 			{
 			echo "<tr><td>\$" . $player->getAttribute('avgPrice') . "</td><td>" . $player->getAttribute('displayName') . "</td><td>" . $player->getAttribute('team') . "</td><td>\$" . $player->getAttribute("minPrice") . "</td><td>\$" . $player->getAttribute("maxPrice") . "</td></tr>";
 			}
-		echo "</tbody></table><p>*Prices are based upon a \$200 budget</p>";
+		echo "</tbody></table></div><p>*Prices are based upon a \$200 budget</p>";
 		}
 }
 
@@ -305,14 +302,14 @@ function ffnWeeklyRankings($params){
 		{
 		echo "<p>Error: " . $doc->getElementsByTagName("Error")->item(0)->nodeValue . "</p>";
 		}else{
-		echo "<table class='ffntable ffntable-striped'><thead><tr><th>Rank</th><th>Player</th><th>Team</th><th>Pos</th></tr></thead><tbody>";
+		echo "<div class='ffntable-responsive'><table class='ffntable ffntable-striped'><thead><tr><th>Rank</th><th>Player</th><th>Team</th><th>Pos</th></tr></thead><tbody>";
 		$r = 1;
 		foreach ($doc->getElementsByTagName("Player") AS $player)
 			{
 			echo "<tr><td>" . $r . "</td><td>" . $player->getElementsByTagName('name')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('team')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('position')->item(0)->nodeValue . "</td></tr>";
 			$r++;
 			}
-		echo "</tbody></table>";
+		echo "</tbody></table></div>";
 		}
 }
 
@@ -339,7 +336,7 @@ function ffnWeeklyProjections($params){
 		{
 		echo "<p>Error: " . $doc->getElementsByTagName("Error")->item(0)->nodeValue . "</p>";
 		}else{
-		echo "<table class='ffntable ffntable-striped'><thead>";
+		echo "<div class='ffntable-responsive'><table class='ffntable ffntable-striped'><thead>";
 		if ($position == 'QB'){echo "<tr><th>Player</th><th>Team</th><th>Comp</th><th>Pass Yds</th><th>Pass TD</th><th>Int</th><th>Ru Yds</th><th>Ru TD</th></tr>";}
 		if ($position == 'RB'){echo "<tr><th>Player</th><th>Team</th><th>Ru Att</th><th>Ru Yds</th><th>Ru TD</th><th>Rec</th><th>Rec Yds</th><th>Rec TD</th><th>Fum</th></tr>";}
 		if ($position == 'WR'){echo "<tr><th>Player</th><th>Team</th><th>Rec</th><th>Rec Yds</th><th>Rec TD</th><th>Ru Att</th><th>Ru Yds</th><th>Ru TD</th><th>Fum</th></tr>";}
@@ -356,7 +353,7 @@ function ffnWeeklyProjections($params){
 			if ($position == 'K'){echo "<tr><td>" . $player->getElementsByTagName('displayName')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('team')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('fg')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('xp')->item(0)->nodeValue . "</td></tr>";}
 			if ($position == 'DEF'){echo "<tr><td>" . $player->getElementsByTagName('displayName')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('defSack')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('defInt')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('defTD')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('defPA')->item(0)->nodeValue . "</td><td>" . $player->getElementsByTagName('defYdsAllowed')->item(0)->nodeValue . "</td></tr>";}
 			}
-		echo "</tbody></table>";
+		echo "</tbody></table></div>";
 		}
 }
 
@@ -413,12 +410,12 @@ function ffnGamedayInactives($params){
 		{
 		echo "<p>Error: " . $doc->getElementsByTagName("Error")->item(0)->nodeValue . "</p>";
 		}else{
-		echo "<table class='ffntable ffntable-striped'><thead><tr><th>Player</th><th>Team</th><th>Pos</th></tr></thead><tbody>";
+		echo "<div class='ffntable-responsive'><table class='ffntable ffntable-striped'><thead><tr><th>Player</th><th>Team</th><th>Pos</th></tr></thead><tbody>";
 		foreach ($doc->getElementsByTagName("Player") AS $player)
 			{
 			echo "<tr><td>" . $player->getAttribute('playerName') . "</td><td>" . $player->getAttribute('team') . "</td><td>" . $player->getAttribute('position') . "</td></tr>";
 			}
-		echo "</tbody></table>";
+		echo "</tbody></table></div>";
 		}
 }
 
@@ -436,7 +433,7 @@ function ffnCallAPI($service, $format, $options = array()){
 	if (count($options) > 0){$url .= '/' . implode('/', $options);}
 	$response = wp_remote_get($url);
 	if (is_array($response)){
-	  $header = $response['headers'];
+	  //$header = $response['headers'];
 	  $body = $response['body'];
 	}
 	if (!isset($body) && $format == 'xml'){$body = '<?xml version="1.0" encoding="UTF-8" ?><Error>No Response</Error>';}
