@@ -3,7 +3,7 @@
  * Plugin Name: Fantasy Football
  * Plugin URI: http://www.fantasyfootballnerd.com/wordpress
  * Description: Put the award-winning fantasy football rankings and projections from FantasyFootballNerd.com on your website. Automatically updated. Perfect for any fantasy football related website. 
- * Version: 1.0.4
+ * Version: 1.1.0
  * Author: TayTech, LLC
  * Author URI: http://www.fantasyfootballnerd.com/wordpress
  * Text Domain: FantasyFootballNerd.com
@@ -250,9 +250,11 @@ function ffnAuction($params){
 
 /**
  * Display the depth charts for all NFL teams
+ * If you want to display the depth chart for just a specific team, add the variable 'team' to the shortcode.
  *
+ * @param array $params An array of values provided in the shortcode. Expecting 'team' => 'GB' if a specific team is being requested. Green Bay in this case. See teh FFN website for listing of team codes
 **/
-function ffnDepthCharts(){
+function ffnDepthCharts($params){
 	$data = ffnCallAPI('depth-charts', 'xml');
 	$doc = DOMDocument::loadXML($data);
 	if ($doc->getElementsByTagName("Error")->length > 0)
@@ -261,19 +263,22 @@ function ffnDepthCharts(){
 		}else{
 		foreach ($doc->getElementsByTagName("Team") AS $team)
 			{
-			echo "<div class='ffnpanel ffnpanel-default ffntop'>
-			  <div class='ffnpanel-heading ffncenter'><img border='0' src='http://www.fantasyfootballnerd.com/images/teams_small2/" . $team->getAttribute('code') . ".png' /> " . $team->getAttribute('name') . "</div>
-			  <div class='ffnpanel-body'>";
-			foreach ($team->getElementsByTagName('Position') AS $pos)
+			if (!isset($params['team']) || (isset($params['team']) && $params['team'] == $team->getAttribute('code')))
 				{
-				echo "<div class='ffnrow'>
-						<div class='ffncol-md-2 ffncol-xs-2'>" . $pos->getAttribute("code") . "</div>
-						<div class='ffncol-md-10 ffncol-xs-10'><ol>";
-						foreach ($pos->getElementsByTagName('Player') AS $player){ echo "<li>" . $player->getAttribute('playerName') . "</li>"; }
-						echo "</ol></div>";
-				echo "</div>";
+				echo "<div class='ffnpanel ffnpanel-default ffntop'>
+				  <div class='ffnpanel-heading ffncenter'><img border='0' src='http://www.fantasyfootballnerd.com/images/teams_small2/" . $team->getAttribute('code') . ".png' /> " . $team->getAttribute('name') . "</div>
+				  <div class='ffnpanel-body'>";
+				foreach ($team->getElementsByTagName('Position') AS $pos)
+					{
+					echo "<div class='ffnrow'>
+							<div class='ffncol-md-2 ffncol-xs-2'>" . $pos->getAttribute("code") . "</div>
+							<div class='ffncol-md-10 ffncol-xs-10'><ol>";
+							foreach ($pos->getElementsByTagName('Player') AS $player){ echo "<li>" . $player->getAttribute('playerName') . "</li>"; }
+							echo "</ol></div>";
+					echo "</div>";
+					}
+				echo "</div></div>";
 				}
-			echo "</div></div>";
 			}
 		}
 }
@@ -508,5 +513,6 @@ function ffn_settings_page() {
     </table>
     <?php submit_button(); ?>
 </form>
+<p>For complete instructions on how to implement the FFN fantasy football plugin, be sure to visit our <a href="http://www.fantasyfootballnerd.com/wordpresss" target="_blank">WordPress How-To Guide</a>.</p>
 </div>
 <?php } ?>
