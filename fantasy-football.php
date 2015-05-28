@@ -3,7 +3,7 @@
  * Plugin Name: Fantasy Football
  * Plugin URI: http://www.fantasyfootballnerd.com/wordpress
  * Description: Put the award-winning fantasy football rankings and projections from FantasyFootballNerd.com on your website. Automatically updated. Perfect for any fantasy football related website. 
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: TayTech, LLC
  * Author URI: http://www.fantasyfootballnerd.com/wordpress
  * Text Domain: FantasyFootballNerd.com

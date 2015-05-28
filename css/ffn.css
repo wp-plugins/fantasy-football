@@ -925,8 +925,101 @@ a.ffnlist-group-item-danger.ffnactive:focus {
 .ffnhidden {
   display: none !important;
 }
-.ffnaffix {
-  position: fixed;
+.ffnrow {
+  margin-left: -15px;
+  margin-right: -15px;
 }
-
-
+.ffncol-xs-1, .ffncol-md-1, .ffncol-xs-2, .ffncol-md-2, .ffncol-xs-3, .ffncol-md-3, .ffncol-xs-4, .ffncol-md-4, .ffncol-xs-5, .ffncol-md-5, .ffncol-xs-6, .ffncol-md-6, .ffncol-xs-7, .ffncol-md-7, .ffncol-xs-8, .ffncol-md-8, .ffncol-xs-9, .ffncol-md-9, .ffncol-xs-10, .ffncol-md-10, .ffncol-xs-11, .ffncol-md-11, .ffncol-xs-12, .ffncol-md-12 {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.ffncol-xs-1, .ffncol-md-1, .ffncol-xs-2, .ffncol-md-2, .ffncol-xs-3, .ffncol-md-3, .ffncol-xs-4, .ffncol-md-4, .ffncol-xs-5, .ffncol-md-5, .ffncol-xs-6, .ffncol-md-6, .ffncol-xs-7, .ffncol-md-7, .ffncol-xs-8, .ffncol-md-8, .ffncol-xs-9, .ffncol-md-9, .ffncol-xs-10, .ffncol-md-10, .ffncol-xs-11, .ffncol-md-11, .ffncol-xs-12, .ffncol-md-12 {
+  float: left;
+}
+.ffncol-xs-12 {
+  width: 100%;
+}
+.ffncol-xs-11 {
+  width: 91.66666667%;
+}
+.ffncol-xs-10 {
+  width: 83.33333333%;
+}
+.ffncol-xs-9 {
+  width: 75%;
+}
+.ffncol-xs-8 {
+  width: 66.66666667%;
+}
+.ffncol-xs-7 {
+  width: 58.33333333%;
+}
+.ffncol-xs-6 {
+  width: 50%;
+}
+.ffncol-xs-5 {
+  width: 41.66666667%;
+}
+.ffncol-xs-4 {
+  width: 33.33333333%;
+}
+.ffncol-xs-3 {
+  width: 25%;
+}
+.ffncol-xs-2 {
+  width: 16.66666667%;
+}
+.ffncol-xs-1 {
+  width: 8.33333333%;
+}
+@media (min-width: 992px) {
+  .ffncol-xs-1, .ffncol-md-1, .ffncol-xs-2, .ffncol-md-2, .ffncol-xs-3, .ffncol-md-3, .ffncol-xs-4, .ffncol-md-4, .ffncol-xs-5, .ffncol-md-5, .ffncol-xs-6, .ffncol-md-6, .ffncol-xs-7, .ffncol-md-7, .ffncol-xs-8, .ffncol-md-8, .ffncol-xs-9, .ffncol-md-9, .ffncol-xs-10, .ffncol-md-10, .ffncol-xs-11, .ffncol-md-11, .ffncol-xs-12, .ffncol-md-12 {
+    float: left;
+  }
+  .ffncol-md-12 {
+    width: 100%;
+  }
+  .ffncol-md-11 {
+    width: 91.66666667%;
+  }
+  .ffncol-md-10 {
+    width: 83.33333333%;
+  }
+  .ffncol-md-9 {
+    width: 75%;
+  }
+  .ffncol-md-8 {
+    width: 66.66666667%;
+  }
+  .ffncol-md-7 {
+    width: 58.33333333%;
+  }
+  .ffncol-md-6 {
+    width: 50%;
+  }
+  .ffncol-md-5 {
+    width: 41.66666667%;
+  }
+  .ffncol-md-4 {
+    width: 33.33333333%;
+  }
+  .ffncol-md-3 {
+    width: 25%;
+  }
+  .ffncol-md-2 {
+    width: 16.66666667%;
+  }
+  .ffncol-md-1 {
+    width: 8.33333333%;
+  }
+}
+.ffnrow:before,
+.ffnrow:after {
+  content: " ";
+  display: table;
+}
+.ffnrow:after {
+  clear: both;
+}
