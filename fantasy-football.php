@@ -3,7 +3,7 @@
  * Plugin Name: Fantasy Football
  * Plugin URI: http://www.fantasyfootballnerd.com/wordpress
  * Description: Put the award-winning fantasy football rankings and projections from FantasyFootballNerd.com on your website. Automatically updated. Perfect for any fantasy football related website. 
- * Version: 1.1.2
+ * Version: 1.1.3
  * Author: TayTech, LLC
  * Author URI: http://www.fantasyfootballnerd.com/wordpress
  * Text Domain: FantasyFootballNerd.com
@@ -28,7 +28,6 @@
 */
 // Make sure we don't expose any info if called directly
 if ( !function_exists( 'add_action' ) ) {
-	echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
 	exit;
 }
 /**
@@ -49,9 +48,12 @@ add_shortcode('ffn_gameday_inactives', 'ffnGamedayInactives');
 
 /**
  * Add our CSS and Javascript
+ * Added stylesheet to its own action. Thank you @dave_kz for the heads up. 
 **/
-wp_enqueue_style('ffncss', plugins_url('fantasy-football/css/ffn.css'),array(),'20150515');
-
+function ffn_add_styles(){
+	wp_enqueue_style('ffncss', plugins_url('fantasy-football/css/ffn.css'),array(),'20150515');
+}
+add_action('wp_enqueue_scripts','ffn_add_styles');
 
 
 /**
