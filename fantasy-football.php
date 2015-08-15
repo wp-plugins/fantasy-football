@@ -127,8 +127,10 @@ function ffnDraftProjections($params){
 /**
  * Display the NFL Schedule
  *
+ * @param array $params An array of values provided in the shortcode. Expecting 'week' => '5' if week 5 is all that should show. If empty, the whole schedule will show
 **/
-function ffnSchedule(){
+function ffnSchedule($params){
+	if (isset($params['week'])){$showWeek = (int)$params['week'];}else{$showWeek = '';}
 	$output = array();
 	$data = ffnCallAPI('schedule', 'xml');
 	$doc = DOMDocument::loadXML($data);
@@ -141,8 +143,11 @@ function ffnSchedule(){
 		$output[] = "<div class='ffntable-responsive'><table class='ffntable ffntable-striped'><thead><tr><th>Game Date</th><th>Home Team</th><th>Away Team</th><th>Kickoff</th><th>TV</th></tr></thead><tbody>";
 		foreach ($doc->getElementsByTagName("Game") AS $game)
 			{
-			if ($game->getAttribute("gameWeek") != $week){ $week = $game->getAttribute("gameWeek"); $output[] = "<tr><td colspan='5' class='ffnbold ffncenter'>Week $week</td></tr>"; }
-			$output[] = "<tr><td>" . date("D, M j, Y", strtotime($game->getAttribute("gameDate"))) . "</td><td>" . $game->getAttribute("homeTeam") . "</td><td>" . $game->getAttribute("awayTeam") . "</td><td>" . $game->getAttribute("gameTimeET") . " ET</td><td>" . $game->getAttribute("tvStation") . "</td></tr>";
+			if ($showWeek == '' || $showWeek == $game->getAttribute("gameWeek"))
+				{
+				if ($game->getAttribute("gameWeek") != $week){ $week = $game->getAttribute("gameWeek"); $output[] = "<tr><td colspan='5' class='ffnbold ffncenter'>Week $week</td></tr>"; }
+				$output[] = "<tr><td>" . date("D, M j, Y", strtotime($game->getAttribute("gameDate"))) . "</td><td>" . $game->getAttribute("homeTeam") . "</td><td>" . $game->getAttribute("awayTeam") . "</td><td>" . $game->getAttribute("gameTimeET") . " ET</td><td>" . $game->getAttribute("tvStation") . "</td></tr>";
+				}
 			}
 		$output[] = "</tbody></table></div>";
 		}

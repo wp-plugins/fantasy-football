@@ -2,8 +2,8 @@
 Contributors: jdyken
 Tags: fantasy football
 Requires at least: 3.0.1
-Tested up to: 4.2.3
-Stable tag: 1.1.3
+Tested up to: 4.2.4
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,7 @@ A: Nope - in fact we'd prefer that you didn't. The plugin is designed to be seam
 
 == Changelog ==
 1.0 Initial version and commit
+1.1.4 Added support for specifying week in nfl_schedule
 
 == Upgrade Notice ==
-This is the initial version
+Added support for specifying week in nfl_schedule. Pass param 'week' and the week number.
